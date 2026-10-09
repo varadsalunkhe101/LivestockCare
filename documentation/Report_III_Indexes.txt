@@ -1,0 +1,65 @@
+LIVESTOCK DISEASE DETECTION SYSTEM
+REPORT INDEXES
+
+TABLE OF CONTENTS
+
+1. INTRODUCTION .......................................................... 1
+2. LITERATURE REVIEW ..................................................... 3
+   2.1 2023: Lumpy Skin Disease Detection Using ResNet-50 ................. 3
+   2.2 2024: Cattle Disease Detection Using VGG16 CNN ..................... 3
+   2.3 2025: LSD Detection Using Deep Feature Extraction .................. 3
+   2.4 2025: Mobile Diagnosis of Foot-and-Mouth Disease ................... 4
+3. PROBLEM STATEMENT ..................................................... 5
+4. OBJECTIVES ............................................................ 6
+   4.1 To develop a livestock disease screening system .................... 6
+   4.2 To classify cattle images into supported categories ............... 6
+   4.3 To display the predicted category and confidence score ............. 6
+   4.4 To provide primary recommendations through a web interface ......... 6
+5. SYSTEM ARCHITECTURE ................................................... 7
+6. METHODOLOGY ........................................................... 8
+   6.1 Dataset Preparation ............................................... 8
+   6.2 Image Preprocessing ............................................... 8
+   6.3 Data Augmentation ................................................. 8
+   6.4 MobileNetV2-Based CNN Model ....................................... 9
+   6.5 Model Training and Validation .................................... 9
+   6.6 Model Evaluation and Saving ....................................... 9
+   6.7 Image Prediction Using the Web Application ......................... 9
+   6.8 Result and Recommendation Display ................................ 10
+   6.9 Prediction History Database ...................................... 10
+7. DATASET FEATURES AND EVALUATION METRICS .............................. 11
+   7.1 Dataset Features ................................................. 11
+   7.2 Evaluation Metrics ............................................... 12
+8. SYSTEM REQUIREMENTS .................................................. 13
+9. RESULTS .............................................................. 14
+   9.1 Home Page ......................................................... 14
+   9.2 Image Upload Page ................................................. 14
+   9.3 Disease Prediction Result ........................................ 15
+   9.4 Healthy Prediction Result ........................................ 15
+   9.5 Prediction History Page .......................................... 16
+10. CONCLUSION .......................................................... 17
+11. FUTURE SCOPE ........................................................ 18
+12. REFERENCES .......................................................... 19
+
+LIST OF TABLES
+
+TABLE I.   Class-Wise Dataset Distribution .............................. 11
+TABLE II.  Dataset Characteristics ...................................... 11
+TABLE III. Evaluation Metrics ............................................ 12
+TABLE IV.  Minimum Hardware Requirements ................................. 13
+TABLE V.   Software Requirements ......................................... 13
+
+LIST OF FIGURES
+
+FIG. 5.1. System Architecture ............................................ 7
+FIG. 9.1. Home Page Interface ............................................ 14
+FIG. 9.2. Image Upload Interface ......................................... 14
+FIG. 9.3. Disease Prediction and Recommendation .......................... 15
+FIG. 9.4. Healthy-Class Prediction ....................................... 15
+FIG. 9.5. Prediction History Stored in the Database ...................... 16
+
+EDITORIAL NOTE
+
+The PDF currently labels the Minimum Hardware Requirements table as Table I
+and the Software Requirements table as Table II. To match this consecutive
+list of tables, update those two captions in the report to Table IV and
+Table V, respectively.

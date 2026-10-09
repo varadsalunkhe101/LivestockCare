@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f7f2" />
+    <title>Screen an image | LivestockCare</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('home') }}"
+        >Livestock<span>Care</span></a
+      >
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a class="active" href="{{ url_for('detection') }}">Image screening</a>
+      </nav>
+
+      <a class="button button-quiet button-small" href="{{ url_for('home') }}">
+        ← Home
+      </a>
+    </header>
+
+    <main class="page-width page-main">
+      <div class="page-heading">
+        <p class="eyebrow">IMAGE SCREENING</p>
+        <h1>Upload a cattle photo</h1>
+        <p>
+          Choose a clear image of the area you want to screen. JPG and PNG files
+          up to 10 MB are supported.
+        </p>
+      </div>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %}
+      <div class="flash-list" role="status">
+        {% for category, message in messages %}
+        <div class="flash flash-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      </div>
+      {% endif %} {% endwith %}
+
+      <form
+        class="upload-form"
+        id="uploadForm"
+        action="{{ url_for('predict') }}"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        <div class="upload-layout">
+          <div class="upload-column">
+            <div
+              class="dropzone"
+              id="dropZone"
+              tabindex="0"
+              role="button"
+              aria-label="Choose or drop an image"
+            >
+              <input
+                id="imageInput"
+                name="image"
+                type="file"
+                accept="image/jpeg,image/png,.jpg,.jpeg,.png"
+                hidden
+              />
+
+              <div class="upload-symbol" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 16V4m0 0L7.5 8.5M12 4l4.5 4.5M4 15.5v3A1.5 1.5 0 0 0 5.5 20h13a1.5 1.5 0 0 0 1.5-1.5v-3"
+                    stroke="currentColor"
+                    stroke-width="1.7"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </div>
+
+              <h2>Drop your image here</h2>
+              <p>or choose a file from your device</p>
+
+              <button
+                class="button button-quiet"
+                type="button"
+                id="chooseImageButton"
+              >
+                Choose image
+              </button>
+
+              <span class="file-hint">JPG or PNG · Maximum 10 MB</span>
+            </div>
+
+            <div class="upload-tip">
+              <span class="notice-mark">i</span>
+              <p>
+                For a useful screening, use a sharp, well-lit photo that clearly
+                shows the area of concern.
+              </p>
+            </div>
+          </div>
+
+          <aside class="preview-card" id="previewCard" aria-live="polite">
+            <div class="preview-empty" id="previewEmpty">
+              <span class="preview-empty-icon" aria-hidden="true">⌁</span>
+              <strong>Image preview</strong>
+              <p>Your selected photo will appear here.</p>
+            </div>
+
+            <img
+              class="preview-image"
+              id="previewImage"
+              alt="Preview of selected cattle image"
+              hidden
+            />
+
+            <div class="preview-meta" id="previewMeta" hidden>
+              <div>
+                <span class="caption-label">SELECTED FILE</span>
+                <strong id="fileName"></strong>
+              </div>
+              <span class="file-ready">Ready</span>
+            </div>
+          </aside>
+        </div>
+
+        <div class="form-actions">
+          <p class="form-disclaimer">
+            The result is a screening estimate, not a confirmed diagnosis.
+          </p>
+
+          <button class="button" type="submit" id="analyzeButton" disabled>
+            Analyze image <span aria-hidden="true">→</span>
+          </button>
+        </div>
+      </form>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <a class="brand brand-footer" href="{{ url_for('home') }}"
+          >Livestock<span>Care</span></a
+        >
+        <p>When in doubt, consult a veterinarian.</p>
+      </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+  </body>
+</html>

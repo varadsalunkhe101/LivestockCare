@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f5f7f2" />
+    <title>Screening result | LivestockCare</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('home') }}"
+        >Livestock<span>Care</span></a
+      >
+
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('detection') }}">Image screening</a>
+      </nav>
+
+      <a class="button button-small" href="{{ url_for('detection') }}">
+        New screening <span aria-hidden="true">→</span>
+      </a>
+    </header>
+
+    <main class="page-width page-main result-main">
+      <div class="result-title">
+        <div>
+          <p class="eyebrow">SCREENING RESULT</p>
+          <h1>Image review</h1>
+        </div>
+        <span class="saved-pill"><i></i> Saved to history</span>
+      </div>
+
+      <section class="result-grid">
+        <div class="result-photo-card">
+          <img
+            src="{{ url_for('uploaded_file', filename=prediction.image_filename) }}"
+            alt="Image submitted for cattle screening"
+          />
+          <div class="photo-caption">
+            <span>Uploaded image</span>
+            <span>{{ prediction.created_at[:16].replace('T', ' ') }}</span>
+          </div>
+        </div>
+
+        <div class="result-detail-card">
+          <div class="result-kicker">MODEL ESTIMATE</div>
+          <h2>{{ predicted_title }}</h2>
+          <p class="result-summary">
+            The model selected this class from the image. It is not a confirmed
+            diagnosis.
+          </p>
+
+          <div class="confidence-block">
+            <div class="confidence-label">
+              <span>Model confidence</span>
+              <strong>{{ "%.1f"|format(prediction.confidence * 100) }}%</strong>
+            </div>
+
+            <div
+              class="confidence-track"
+              role="img"
+              aria-label="Model confidence {{ '%.1f'|format(prediction.confidence * 100) }} percent"
+            >
+              <span
+                class="confidence-fill confidence-{{ prediction.confidence_band }}"
+              ></span>
+            </div>
+
+            {% if prediction.confidence_band == "higher" %}
+            <p class="confidence-note">
+              Higher model confidence · still needs veterinary confirmation.
+            </p>
+            {% elif prediction.confidence_band == "moderate" %}
+            <p class="confidence-note">
+              Moderate model confidence · treat this as a preliminary screening
+              result.
+            </p>
+            {% else %}
+            <p class="confidence-note confidence-low">
+              Low model confidence · disease-specific guidance is withheld.
+            </p>
+            {% endif %}
+          </div>
+
+          <div class="guidance-block">
+            <div class="guidance-heading">
+              <span class="guidance-icon" aria-hidden="true">＋</span>
+              <div>
+                <p class="eyebrow">NEXT STEPS</p>
+                <h3>{{ guidance.title }}</h3>
+              </div>
+            </div>
+
+            <p class="guidance-summary">{{ guidance.summary }}</p>
+
+            <ul class="guidance-list">
+              {% for item in guidance.precautions %}
+              <li>{{ item }}</li>
+              {% endfor %}
+            </ul>
+
+            {% if guidance.source_url %}
+            <a
+              class="source-link"
+              href="{{ guidance.source_url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Guidance reference: {{ guidance.source_name }} ↗
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </section>
+
+      <div class="result-footer-note">
+        <span class="notice-mark">i</span>
+        <p>
+          This tool screens images only. If the animal is unwell, contact a
+          veterinarian instead of relying on the model score.
+        </p>
+      </div>
+
+      <div class="result-actions">
+        <a class="button" href="{{ url_for('detection') }}">
+          Screen another image <span aria-hidden="true">→</span>
+        </a>
+        <a class="text-link" href="{{ url_for('home') }}">Back to home</a>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <a class="brand brand-footer" href="{{ url_for('home') }}"
+          >Livestock<span>Care</span></a
+        >
+        <p>Educational cattle image screening · Not a veterinary diagnosis</p>
+      </div>
+    </footer>
+  </body>
+</html>

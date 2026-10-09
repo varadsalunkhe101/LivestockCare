@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+dataset/
+**/dataset/
+uploads/
+*.db
+*.sqlite
+*.sqlite3
+.env

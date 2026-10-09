@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>History | LivestockCare</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="{{ url_for('home') }}"
+        >Livestock<span>Care</span></a
+      >
+      <nav class="main-nav" aria-label="Main navigation">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a class="active" href="{{ url_for('history') }}">History</a>
+      </nav>
+      <a class="button button-small" href="{{ url_for('detection') }}"
+        >New screening →</a
+      >
+    </header>
+
+    <main class="page-width page-main">
+      <div class="page-heading">
+        <p class="eyebrow">DATABASE RECORDS</p>
+        <h1>Screening history</h1>
+        <p>Past image results and the care guidance stored in this project.</p>
+      </div>
+
+      <section class="history-section">
+        <h2>Predictions <span>{{ predictions|length }}</span></h2>
+
+        {% if predictions %}
+        <div class="history-table-wrap">
+          <table class="history-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Image</th>
+                <th>Predicted class</th>
+                <th>Confidence</th>
+                <th>Confidence level</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in predictions %}
+              <tr>
+                <td>{{ item.created_at[:16].replace('T', ' ') }}</td>
+                <td>
+                  <a
+                    href="{{ url_for('uploaded_file', filename=item.image_filename) }}"
+                    target="_blank"
+                  >
+                    View image
+                  </a>
+                </td>
+                <td>{{ item.condition_title or item.predicted_class }}</td>
+                <td>{{ "%.1f"|format(item.confidence * 100) }}%</td>
+                <td>{{ item.confidence_band|title }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% else %}
+        <p class="history-empty">
+          No predictions saved yet. Analyze an image and it will appear here.
+        </p>
+        {% endif %}
+      </section>
+
+      <section class="history-section">
+        <h2>Care guidance <span>{{ care_guidance|length }}</span></h2>
+
+        <div class="guidance-grid">
+          {% for item in care_guidance %}
+          <article class="history-guidance-card">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.summary }}</p>
+
+            <details>
+              <summary>View stored precautions</summary>
+              <pre>{{ item.precautions_json }}</pre>
+            </details>
+
+            {% if item.source_url %}
+            <a
+              href="{{ item.source_url }}"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Source: {{ item.source_name }} ↗
+            </a>
+            {% endif %}
+          </article>
+          {% endfor %}
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-width footer-inner">
+        <a class="brand brand-footer" href="{{ url_for('home') }}"
+          >Livestock<span>Care</span></a
+        >
+        <p>Educational cattle image screening · Not a veterinary diagnosis</p>
+      </div>
+    </footer>
+  </body>
+</html>
