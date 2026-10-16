@@ -10,7 +10,6 @@ os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
 import tensorflow as tf
 
 import numpy as np
-import tensorflow as tf
 from flask import Flask, flash, redirect, render_template, request, send_from_directory, url_for
 from PIL import Image, ImageOps, UnidentifiedImageError
 from werkzeug.utils import secure_filename
