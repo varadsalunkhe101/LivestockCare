@@ -4,6 +4,11 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 
+import os
+os.environ["CUDA_VISIBLE_DEVICES"] = "-1"
+
+import tensorflow as tf
+
 import numpy as np
 import tensorflow as tf
 from flask import Flask, flash, redirect, render_template, request, send_from_directory, url_for
