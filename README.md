@@ -1,40 +1,34 @@
 # Livestock Disease Detection System
 
-A student project that uses image classification to screen cattle photographs for selected disease categories. The system combines a MobileNetV2-based CNN model with a Flask web application.
+A student project for preliminary screening of cattle photographs. It combines a MobileNetV2-based CNN image classifier with a Flask web application.
 
-## Supported Classes
+## Supported classes
 
 - Foot-and-mouth disease (FMD)
+- Healthy
 - Infectious bovine keratoconjunctivitis (IBK)
 - Lumpy skin disease (LSD)
 - Mastitis
 - Ringworm
-- Healthy
 
 ## Features
 
-- Upload a cattle image through a web interface.
-- Predict one of the classes supported by the trained model.
+- Upload a cattle image through the web interface.
 - Display the predicted class and model confidence score.
-- Show primary precautionary guidance associated with the prediction.
-- Store prediction history in an SQLite database.
-- View previous predictions through the history page.
+- Show general precautionary guidance for the predicted class.
+- Store prediction history in SQLite and view it in the history page.
 
-## Technology Stack
+## Technology stack
 
-- Python
-- TensorFlow and Keras
-- MobileNetV2 with transfer learning
-- Flask
-- SQLite
-- HTML, CSS, and JavaScript
+Python, TensorFlow/Keras, MobileNetV2, Flask, SQLite, HTML, CSS, and JavaScript.
 
-## Project Structure
+## Project structure
 
 ```text
-livestock_skin_disease_project/
+D:\LivestockCare\
 ├── app.py
 ├── requirements.txt
+├── .python-version
 ├── database/
 │   └── view_database.py
 ├── models/
@@ -42,7 +36,7 @@ livestock_skin_disease_project/
 │   └── livestock_disease_model.keras
 ├── notebooks/
 ├── static/
-│   ├── images/
+│   ├── images/cattle-hero.png
 │   ├── script.js
 │   └── style.css
 └── templates/
@@ -52,155 +46,35 @@ livestock_skin_disease_project/
     └── result.html
 ```
 
-## Setup and Run
+## Run on Windows
 
-1. Clone the repository and open its folder:
+Open PowerShell in the existing project folder and run:
 
-   ```powershell
-   git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-   cd livestock_skin_disease_project
-   ```
-
-2. Create and activate a virtual environment:
-
-   ```powershell
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   ```
-
-3. Install the required packages:
-
-   ```powershell
-   pip install -r requirements.txt
-   ```
-
-4. Confirm that these model files are present:
-
-   ```text
-   models/livestock_disease_model.keras
-   models/class_names.json
-   ```
-
-5. Start the application:
-
-   ```powershell
-   python app.py
-   ```
-
-6. Open the local address printed in the terminal in a web browser.
-
-## Dataset and Model
-
-The image dataset is not included in this repository. The training notebooks are included as project references. The trained model and its class-name file are included because the web application needs them to make predictions.
-
-## Evaluation Note
-
-An earlier evaluation reported **80.65% test accuracy**. A later dataset check found exact duplicate images across the training, validation, and test subsets. Therefore, this result is preliminary and should be recalculated after removing duplicates and repartitioning the data.
-
-## Important Notice
-
-This application provides preliminary image-based screening only. Its prediction and confidence score do not confirm a disease. Contact a veterinarian for diagnosis and treatment advice.
-=======
-# Livestock Disease Detection System
-
-A student project that uses image classification to screen cattle photographs for selected disease categories. The system combines a MobileNetV2-based CNN model with a Flask web application.
-
-## Supported Classes
-
-- Foot-and-mouth disease (FMD)
-- Infectious bovine keratoconjunctivitis (IBK)
-- Lumpy skin disease (LSD)
-- Mastitis
-- Ringworm
-- Healthy
-
-## Features
-
-- Upload a cattle image through a web interface.
-- Predict one of the classes supported by the trained model.
-- Display the predicted class and model confidence score.
-- Show primary precautionary guidance associated with the prediction.
-- Store prediction history in an SQLite database.
-- View previous predictions through the history page.
-
-## Technology Stack
-
-- Python
-- TensorFlow and Keras
-- MobileNetV2 with transfer learning
-- Flask
-- SQLite
-- HTML, CSS, and JavaScript
-
-## Project Structure
-
-```text
-livestock_skin_disease_project/
-├── app.py
-├── requirements.txt
-├── database/
-│   └── view_database.py
-├── documentation/
-├── models/
-│   ├── class_names.json
-│   └── livestock_disease_model.keras
-├── notebooks/
-├── static/
-│   ├── images/
-│   ├── script.js
-│   └── style.css
-└── templates/
-    ├── detection.html
-    ├── history.html
-    ├── index.html
-    └── result.html
+```powershell
+Set-Location 'D:\LivestockCare'
+python --version
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+pip install -r requirements.txt
+python app.py
 ```
 
-## Setup and Run
+If PowerShell blocks virtual-environment activation, use this for the current terminal session, then activate again:
 
-1. Clone the repository and open its folder:
+```powershell
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+.\.venv\Scripts\Activate.ps1
+```
 
-   ```powershell
-   git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
-   cd livestock_skin_disease_project
-   ```
+Open `http://127.0.0.1:5000` in a browser. The application creates its `uploads` folder and SQLite database in `database/livestock_app.db` when it starts. Set `FLASK_SECRET_KEY` in the environment if you need a stable session key across restarts; otherwise the application generates a temporary key at startup. Debug mode is off by default; set `$env:FLASK_DEBUG = "1"` only when debugging locally.
 
-2. Create and activate a virtual environment:
+## Dataset and evaluation
 
-   ```powershell
-   python -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   ```
+The image dataset is not included. The training notebooks are included for reference. The trained model and class-name file are included because the web application requires them for predictions.
 
-3. Install the required packages:
+An earlier evaluation reported **80.65% test accuracy**. A later dataset check found exact duplicate images across the training, validation, and test subsets. Treat this accuracy as preliminary; it should be recalculated after removing duplicates and repartitioning the dataset.
 
-   ```powershell
-   pip install -r requirements.txt
-   ```
+## Important notice
 
-4. Confirm that these model files are present:
-
-   ```text
-   models/livestock_disease_model.keras
-   models/class_names.json
-   ```
-
-5. Start the application:
-
-   ```powershell
-   python app.py
-   ```
-
-6. Open the local address printed in the terminal in a web browser.
-
-## Dataset and Model
-
-The image dataset is not included in this repository. The training notebooks are included as project references. The trained model and its class-name file are included because the web application needs them to make predictions.
-
-## Evaluation Note
-
-An earlier evaluation reported **80.65% test accuracy**. A later dataset check found exact duplicate images across the training, validation, and test subsets. Therefore, this result is preliminary and should be recalculated after removing duplicates and repartitioning the data.
-
-## Important Notice
-
-This application provides preliminary image-based screening only. Its prediction and confidence score do not confirm a disease. Contact a veterinarian for diagnosis and treatment advice.
+This application provides preliminary image-based screening only. A prediction and its confidence score do not confirm a disease or prescribe treatment. Contact a veterinarian for diagnosis and care advice.

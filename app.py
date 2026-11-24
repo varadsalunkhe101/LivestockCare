@@ -1,4 +1,5 @@
 import json
+import secrets
 import sqlite3
 import uuid
 from datetime import datetime
@@ -32,7 +33,7 @@ LOW_CONFIDENCE_LIMIT = 0.50
 HIGH_CONFIDENCE_LIMIT = 0.75
 
 app = Flask(__name__)
-app.secret_key = "local-project-secret-key"
+app.secret_key = os.environ.get("FLASK_SECRET_KEY") or secrets.token_hex(32)
 app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_SIZE
 
 UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
@@ -385,4 +386,4 @@ def upload_too_large(_error):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=os.environ.get("FLASK_DEBUG") == "1")
